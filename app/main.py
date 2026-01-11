@@ -1,14 +1,20 @@
-from parser import convert_pdf_to_string
-from tagger import extract_tags
-from matcher import tag_match_description
-from fetchjobs import fetch_job_ads
+from app.services.pdf_parser import convert_pdf_to_string
+from app.services.user_tagger import extract_tags
+from app.services.job_matcher import tag_match_description
+from app.services.job_service import fetch_job_ads
 from pathlib import Path
-from fetchjobs import fetch_job_ads
+from app.services.job_service import fetch_job_ads
 import os
 from dotenv import load_dotenv
-from database import initialize_db
-
+from app.db.session import initialize_db
+from fastapi import FastAPI, BackgroundTasks
 load_dotenv()
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"status": "FastAPI is running!"}
 
 # Finds the file
 DATA_DIR = Path(__file__).parent / "data"
