@@ -23,7 +23,6 @@ class JobMatchResult(BaseModel):
 #Model configuration
 client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 ai_model = "gemini-2.5-flash-lite"
-test_user_id=os.getenv("USER_ID")
 
 #Creates tags with gemini based on the provided resume string
 def extract_tags_with_ai(resume_text: str):

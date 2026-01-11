@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def intialize_db():
+def initialize_db():
     if not firebase_admin._apps:
         # Finds the path
         DATA_DIR = Path(__file__).parent / "data"

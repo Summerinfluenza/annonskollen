@@ -1,5 +1,4 @@
 import fitz
-from pathlib import Path
 
 #Converts pdf to a string
 def convert_pdf_to_string(pdf_file):
@@ -12,7 +11,7 @@ def convert_pdf_to_string(pdf_file):
 
 def _extract_text_from_pdf(file_bytes: bytes) -> str:
     with fitz.open(stream=file_bytes, filetype="pdf") as doc:
-        print("pdf extracted")
+        print("PDF extracted.")
         return "\n".join(page.get_text() for page in doc)
     
 
