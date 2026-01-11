@@ -11,7 +11,7 @@ def initialize_db():
     if not firebase_admin._apps:
         # Finds the path
         BASE_DIR = Path(__file__).resolve().parent.parent
-        DATA_DIR = BASE_DIR / "data"
+        DATA_DIR = BASE_DIR / "db"
 
         # Fetch the service account key JSON file contents
         cred = credentials.Certificate(DATA_DIR/"firebase-adminsdk.json")
