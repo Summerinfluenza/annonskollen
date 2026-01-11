@@ -23,11 +23,14 @@ def _save_fetched_data_to_firebase(json_response, keyword_type, user_id=test_use
 
     for hit in hits:
         ref.child(hit['id']).set({
+                'job_id': hit['id'],
                 'headline': hit['headline'],
                 'employer': hit['employer']['name'],
                 'deadline': hit['application_deadline'],
                 'link': hit['webpage_url'],
-                'description': hit['description']['text']
+                'description': hit['description']['text'],
+                "match_date": "false",
+                "match_percentage": 0
             })
 
     return
