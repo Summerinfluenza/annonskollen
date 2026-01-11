@@ -1,30 +1,22 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException
-from app.services.pdf_parser import convert_pdf_to_string
+from fastapi import APIRouter, HTTPException
 from app.services.user_tagger import extract_tags
-from pathlib import Path
-import shutil
+from pydantic import BaseModel
+
+class ResumeData(BaseModel):
+    user_id: str
+    resume: str
 
 router = APIRouter()
-user_resume_cache = {}
 
 @router.post("/createusertags")
-async def extract_user_tags(user_id: str, file: UploadFile = File(...)):
-    # Saves the uploaded file temporarily
-    temp_path = Path(f"temp_{user_id}.pdf")
-    with open(temp_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-    
-    # Extracts text using parser
-    resume_text = convert_pdf_to_string(temp_path)
-    user_resume_cache[user_id] = resume_text
-    
-    # Cleans up
-    temp_path.unlink() 
+async def extract_user_tags(data: ResumeData):
 
     # Processes resume and extracts usertags
-    resume_text = user_resume_cache.get(user_id)
-    if not resume_text:
-        raise HTTPException(status_code=400, detail="No resume text found. Run /convertfile first.")
+    if not data.resume:
+        raise HTTPException(status_code=400, detail="No resume text found.")
     
-    extract_tags(resume_text, user_id)
-    return {"status": "success", "message": f"Tags extracted for {user_id}"}
+    if not data.user_id:
+        raise HTTPException(status_code=400, detail="No userid found.")
+    
+    extract_tags(data.resume, data.user_id)
+    return {"status": "success", "message": f"Tags extracted for {data.user_id}"}
