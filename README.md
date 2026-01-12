@@ -18,7 +18,7 @@ source .venv/bin/activate
 ```
 
 
-Then head to individual component for installation according to the READ.ME
+Then head to individual component for installation according to the README.md
 
 ## After installation, run with
 Backend + app, run in /
