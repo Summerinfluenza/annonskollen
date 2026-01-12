@@ -1,18 +1,3 @@
-## Create the environment
-```
-python3 -m venv .venv
-```
-
-## Activate (Linux/macOS)
-```
-source .venv/bin/activate
-```
-
-## Activate (Windows)
-```
-.venv\Scripts\activate
-```
-
 ## Install Dependencies
 ```
 pip install -r requirements.txt

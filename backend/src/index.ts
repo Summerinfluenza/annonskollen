@@ -1,9 +1,15 @@
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
 import { swaggerUI } from '@hono/swagger-ui';
+import { cors } from 'hono/cors';
 
 const app = new Hono();
 const PYTHON_URL = 'http://127.0.0.1:8000';
+
+app.use('/api/*', cors({
+  origin: 'http://localhost:5173',
+  allowMethods: ['POST', 'GET', 'OPTIONS'],
+}));
 
 // Opens swagger.ui
 app.get('/openapi.json', (c) => {
