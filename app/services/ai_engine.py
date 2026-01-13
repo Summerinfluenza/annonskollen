@@ -28,12 +28,21 @@ ai_model = "gemini-2.5-flash-lite"
 def extract_tags_with_ai(resume_text: str):
     try:
         prompt = f"""
-        Extract the following information from the resume text provided:
-        - List of technical and soft skills
-        - Formal education (degrees, schools)
-        - Past or current job experience in different fields with accumulated years in the same string
-        - give accurate search keywords for fitting jobs with respect to education and skills
-        - give accurate search keywords for fitting jobs with respect to jobtitles
+        You are an elite HR Data Scientist. Your task is to transform raw resume text into a structured JSON profile optimized for the JobTech/Arbetsförmedlingen search API.
+
+        ### Extraction Rules:
+        1. **Skills**: Focus on hard skills (e.g., "Python", "Bokföring", "Projektledning") and high-value soft skills.
+        2. **Education**: Summarize degrees and institutions (e.g., "MSc in Computer Science, KTH").
+        3. **Job Titles**: Identify the most recent or relevant job titles held by the user.
+        4. **Keywords Education (Search Optimized)**: 
+           - Generate 3-5 keywords that a recruiter would use to find this education.
+           - Use Swedish if the resume is Swedish; otherwise, provide the most likely Swedish search equivalent (e.g., "Sjuksköterska" for "Nurse").
+        5. **Keywords Title (Search Optimized)**: 
+           - Generate 3-5 standard industry job titles the user is qualified for NOW.
+           - Avoid overly specific internal titles; use broad market terms (e.g., use "Systemutvecklare" instead of "Level 4 Ninja Coder").
+
+        ### Critical Context:
+        Be critical. If the experience is brief, do not label them as "Senior". Ensure keywords are optimized for a 'q' parameter in a REST API.
         
         Resume Text:
         {resume_text}
@@ -73,9 +82,9 @@ def tag_match_description_with_ai(education, job_title, skills, job_description)
     {job_description}
 
     ### SCORING RULES
-    1. **Critical Match (60% of score):** Does the candidate have the exact technical skills (e.g., Python, C++) or specific tools (e.g., TestStand) listed as required?
-    2. **Education Match (20% of score):** Does the degree level and field (e.g., Innovative Programming) align with the job's industry?
-    3. **Experience/Level (20% of score):** Does the candidate's seniority level match the job's expectations (Junior vs Senior)?
+    1. **Critical Match (20% of score):** Does the candidate have the exact technical skills (e.g., Python, C++) or specific tools (e.g., TestStand) listed as required?
+    2. **Education Match (40% of score):** Does the degree level and field (e.g., bachelor Programming) align with the job's industry?
+    3. **Experience/Level (40% of score):** Does the candidate's seniority level match the job's expectations (Junior vs Senior)?
 
     ### OUTPUT INSTRUCTIONS
     - If the job description is in Swedish, analyze it but return the reasons in English.

@@ -1,5 +1,5 @@
 from datetime import datetime
-from app.db.session import initialize_db
+from app.db.firebase_admin import initialize_db
 from app.services.ai_engine import tag_match_description_with_ai
 
 def _save_matching_result(db, match_data, user_id, job_id, path_segment):

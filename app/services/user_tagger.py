@@ -1,4 +1,4 @@
-from app.db.session import initialize_db
+from app.db.firebase_admin import initialize_db
 from app.services.ai_engine import extract_tags_with_ai
 
 #Saves user tags to db

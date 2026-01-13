@@ -2,7 +2,7 @@ import requests
 import json
 import os
 from dotenv import load_dotenv
-from app.db.session import initialize_db
+from app.db.firebase_admin import initialize_db
 
 load_dotenv()
 url = 'https://jobsearch.api.jobtechdev.se'
@@ -34,7 +34,7 @@ def _save_fetched_data_to_firebase(db, user_id, json_response, keyword_type):
     return
 
 
-def fetch_job_ads(user_id, municipality):
+def fetch_job_ads(user_id, municipality, limit=100):
     db = initialize_db()
     edu_ref = db.reference(f"{user_id}/tags/keywords_education")
     title_ref = db.reference(f"{user_id}/tags/keywords_title")
@@ -42,12 +42,12 @@ def fetch_job_ads(user_id, municipality):
     title_list = title_ref.get() or []
 
     for tag in education_list:
-        search_params = {'q': f"{tag} {municipality}", 'limit': 5}
+        search_params = {'q': f"{tag} {municipality}", 'limit': limit}
         json_response = _get_ads(search_params)
         _save_fetched_data_to_firebase(db, user_id, json_response, "education")
     
     for tag in title_list:
-        search_params = {'q': f"{tag} {municipality}", 'limit': 5}
+        search_params = {'q': f"{tag} {municipality}", 'limit': limit}
         json_response = _get_ads(search_params)
         _save_fetched_data_to_firebase(db, user_id, json_response, "title")
 

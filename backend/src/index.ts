@@ -2,6 +2,8 @@ import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
 import { swaggerUI } from '@hono/swagger-ui';
 import { cors } from 'hono/cors';
+import resume from './api/resume.js';
+import jobs from './api/jobs.js';
 
 const app = new Hono();
 const PYTHON_URL = 'http://127.0.0.1:8000';
@@ -11,6 +13,9 @@ app.use('/api/*', cors({
   allowMethods: ['POST', 'GET', 'OPTIONS'],
 }));
 
+app.route('/api', resume);
+app.route('/api', jobs);
+
 // Opens swagger.ui
 app.get('/openapi.json', (c) => {
   return c.json({
@@ -18,7 +23,12 @@ app.get('/openapi.json', (c) => {
     info: {
       title: 'Annonskollen Gateway API',
       version: '1.0.0',
-      description: 'TypeScript Gateway for Resume Processing',
+      servers: [
+        {
+          url: 'http://localhost:3000',
+          description: 'Local Development Server'
+        }
+      ],
     },
     paths: {
       '/api/upload': {
@@ -42,7 +52,7 @@ app.get('/openapi.json', (c) => {
           responses: { 200: { description: 'Extraction successful' } },
         },
       },
-      '/api/fetchjobs': {
+      '/api/fetch': {
         post: {
           summary: 'Fetches relevant jobs',
           requestBody: {
@@ -63,7 +73,7 @@ app.get('/openapi.json', (c) => {
           responses: { 200: { description: 'Jobs fetched successfully' } },
         },
       },
-      '/api/matchjobs': {
+      '/api/match': {
         post: {
           summary: 'Matches user with jobs',
           requestBody: {
@@ -81,6 +91,26 @@ app.get('/openapi.json', (c) => {
             }
           },
           responses: { 200: { description: 'Matching process started' } },
+        },
+      },
+      '/api/get': {
+        post: {
+          summary: 'Fetch matched jobs, matched percentage ascending order',
+          requestBody: {
+            required: true,
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    user_id: { type: 'string', example: 'anna_123' }
+                  },
+                  required: ['user_id']
+                }
+              }
+            }
+          },
+          responses: { 200: { description: 'Jobs fetched successfully' } },
         },
       },
     },
