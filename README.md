@@ -1,6 +1,6 @@
 
-# Overview
-Jobbannonskollen automates the job search by matching your resume directly to live job openings. Instead of manual searching, the purpose is to reduce the time spent on manually searching and uses AI to automatically match and score how well your profile fits specific job requirements.
+# Project overview
+Jobbannonskollen automates your job search by matching your resume to live openings in real-time. Instead of endless scrolling, our AI instantly identifies and scores the best opportunities for your profile, ensuring you only apply to the roles where you are a top-tier candidate.
 
 ## Create the environment
 ```
