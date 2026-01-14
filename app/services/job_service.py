@@ -1,10 +1,10 @@
 import requests
 import json
-import os
 from dotenv import load_dotenv
 from app.db.firebase_admin import initialize_db
 
 load_dotenv()
+# Government API for job fetch
 url = 'https://jobsearch.api.jobtechdev.se'
 url_for_search = f"{url}/search"
 
@@ -30,26 +30,25 @@ def _save_fetched_data_to_firebase(db, user_id, json_response, keyword_type):
                 "match_date": "false",
                 "match_percentage": 0
             })
-
     return
 
-
+# Fetches job and saves relevant information to the database 
 def fetch_job_ads(user_id, municipality, limit=100):
     db = initialize_db()
     edu_ref = db.reference(f"{user_id}/tags/keywords_education")
-    title_ref = db.reference(f"{user_id}/tags/keywords_title")
+    experience_ref = db.reference(f"{user_id}/tags/keywords_experience")
     education_list = edu_ref.get() or []
-    title_list = title_ref.get() or []
+    experience_list = experience_ref.get() or []
 
     for tag in education_list:
         search_params = {'q': f"{tag} {municipality}", 'limit': limit}
         json_response = _get_ads(search_params)
         _save_fetched_data_to_firebase(db, user_id, json_response, "education")
     
-    for tag in title_list:
+    for tag in experience_list:
         search_params = {'q': f"{tag} {municipality}", 'limit': limit}
         json_response = _get_ads(search_params)
-        _save_fetched_data_to_firebase(db, user_id, json_response, "title")
+        _save_fetched_data_to_firebase(db, user_id, json_response, "experience")
 
     print("Jobs fetched from Arbetsförmedlingen.")
     return json_response

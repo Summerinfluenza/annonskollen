@@ -1,6 +1,5 @@
 import fitz
 
-#Converts pdf to a string
 def convert_pdf_to_string(pdf_file):
     if pdf_file.exists():
         with open(pdf_file, "rb") as f:
@@ -14,8 +13,3 @@ def _extract_text_from_pdf(file_bytes: bytes) -> str:
         print("PDF extracted.")
         return "\n".join(page.get_text() for page in doc)
     
-
-# Finds the file
-# DATA_DIR = Path(__file__).parent / "data"
-# pdf_file = DATA_DIR / "testresume.pdf"
-# open_pdf(pdf_file)

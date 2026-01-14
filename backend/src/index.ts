@@ -63,7 +63,7 @@ app.get('/openapi.json', (c) => {
                   type: 'object',
                   properties: {
                     user_id: { type: 'string', example: 'anna_123' },
-                    municipality: { type: 'string', example: 'Stockholm' }
+                    municipality: { type: 'string', example: 'Linköping' }
                   },
                   required: ['user_id', 'municipality']
                 }

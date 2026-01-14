@@ -7,11 +7,9 @@ const PYTHON_URL = 'http://127.0.0.1:8000';
 
 resume.post('/upload', async (c) => {
   try {
-    console.log("response")
     const body = await c.req.parseBody();
     const file = body['file'] as File;
     const userId = body['user_id'] as string;
-    console.log("response1")
     if (!file) return c.json({ error: "No file uploaded" }, 400);
 
     // 1. Convert file to Buffer
@@ -21,7 +19,6 @@ resume.post('/upload', async (c) => {
     // 2. Extract text from PDF
     const pdfData = await PdfParse(buffer);
     const extractedText = pdfData.text;
-    console.log("response2")
     console.log(`Extracted ${extractedText.length} characters for user ${userId}`);
 
     // 3. Send the STRING to Python
@@ -30,8 +27,6 @@ resume.post('/upload', async (c) => {
       user_id: userId,
       resume: extractedText
     });
-    console.log("response3")
-    console.log(pythonResponse)
 
     return c.json({
       message: "Extraction successful",

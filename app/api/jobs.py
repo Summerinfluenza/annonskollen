@@ -7,7 +7,6 @@ class JobData(BaseModel):
     user_id: str
     municipality: str
 
-
 router = APIRouter()
 
 @router.post("/fetchjobs")
