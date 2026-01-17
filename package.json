@@ -2,9 +2,9 @@
   "name": "annonskollen-root",
   "version": "1.0.0",
   "scripts": {
-    "start:python": ". .venv/bin/activate && uvicorn app.main:app --port 8000 --reload",
     "start:node": "cd backend && npm run dev",
-"start:worker": ". .venv/bin/activate && export PYTHONPATH=$PYTHONPATH:. && python -m app.worker",    "dev": "concurrently -n \"PYTHON,NODE,WORKER\" -c \"blue,green,magenta\" \"npm run start:python\" \"npm run start:node\" \"npm run start:worker\""  },
+    "start:worker": ". .venv/bin/activate && export PYTHONPATH=$PYTHONPATH:. && python -m app.worker",
+    "dev": "concurrently -n \"NODE,WORKER\" -c \"green,magenta\" \"npm run start:node\" \"npm run start:worker\""},
   "dependencies": {
     "@hono/swagger-ui": "^0.5.3",
     "@hono/zod-openapi": "^1.2.0",
