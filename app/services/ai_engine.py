@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# --- Pydantic Schemas ---
 class ResumeTags(BaseModel):
     skills: List[str]
     education: List[str]
@@ -23,7 +22,6 @@ class JobMatchResult(BaseModel):
     summary: str
     apply: str
 
-# --- Updated AI Engine Class ---
 class AIEngine:
     def __init__(self, db_instance):
         self.client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))

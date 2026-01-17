@@ -1,5 +1,15 @@
 firebase-adminsdk.json
 firebaseAdminSdk.json
 .env
-*.pyc
+
+.venv/
+env/
+venv/
+
+node_modules/
+dist/
+
 __pycache__/
+*.pyc
+*.pyo
+*.pyd

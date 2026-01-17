@@ -73,15 +73,12 @@ class JobManager:
         print(f"Jobs fetched and stored for user {user_id}.")
 
     def match_jobs_with_ai(self, user_id):
-        """Matches existing stored jobs against user profile using AI."""
-        # Get user context
         context = {
             'education': self.db.reference(f"{user_id}/tags/education").get(),
             'experience': self.db.reference(f"{user_id}/tags/experience").get(),
             'skills': self.db.reference(f"{user_id}/tags/skills").get()
         }
 
-        # Process each category
         for category in ['education', 'experience']:
             jobs = self.db.reference(f"{user_id}/jobs/{category}").get() or {}
             

@@ -9,15 +9,12 @@ load_dotenv()
 
 def initialize_db():
     if not firebase_admin._apps:
-        # Finds the path
         BASE_DIR = Path(__file__).resolve().parent.parent
         DATA_DIR = BASE_DIR / "db"
 
-        # Fetches the service account key JSON file contents
         cred = credentials.Certificate(DATA_DIR/"firebase-adminsdk.json")
         database_url=os.getenv("DATABSE_URL")
 
-        # Initialize the app with a service account, granting admin privileges
         firebase_admin.initialize_app(cred, {
             'databaseURL': database_url
         })
