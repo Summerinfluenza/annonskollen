@@ -4,9 +4,12 @@ import { swaggerUI } from '@hono/swagger-ui';
 import { cors } from 'hono/cors';
 import resume from './api/resume.js';
 import jobs from './api/jobs.js';
+import { initKafka } from './kafka';
+import { logger } from './logger';
 
 const app = new Hono();
 const PYTHON_URL = 'http://127.0.0.1:8000';
+initKafka().catch(err => logger.error(err, 'Kafka initialization failed'));
 
 app.use('/api/*', cors({
   origin: 'http://localhost:5173',
