@@ -3,7 +3,7 @@ import { serve } from '@hono/node-server';
 import { swaggerUI } from '@hono/swagger-ui';
 import { cors } from 'hono/cors';
 import resume from './api/resume.js';
-import jobs from './api/jobs.js';
+import jobs from './api/job.js';
 import { initKafka } from './kafka';
 import { logger } from './logger';
 

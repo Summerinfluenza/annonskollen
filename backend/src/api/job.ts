@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { db } from '../db/firebaseAdmin.js';
-import { produceEvent } from '../kafka';
-import { logger } from '../logger';
+import { produceEvent } from '../kafka.js';
+import { logger } from '../logger.js';
 
 const jobs = new Hono();
 const PYTHON_URL = 'http://127.0.0.1:8000';
